@@ -1,0 +1,40 @@
+@startuml
+
+class Bank {
+    +name: String
+    +address: String
+    +addCustomer(customer: Customer): void
+    +getAccounts(): List<Account>
+}
+
+class Customer {
+    +customerId: String
+    +name: String
+    +email: String
+    +phoneNumber: String
+    +openAccount(account: Account): void
+    +getAccounts(): List<Account>
+}
+
+class Account {
+    +accountNumber: String
+    +balance: double
+    +accountType: String
+    +deposit(amount: double): void
+    +withdraw(amount: double): void
+    +getTransactions(): List<Transaction>
+}
+
+class Transaction {
+    +transactionId: String
+    +date: Date
+    +amount: double
+    +transactionType: String
+    +execute(): void
+}
+
+Bank "1" -- "*" Customer : has
+Customer "1" -- "*" Account : owns
+Account "1" -- "*" Transaction : generates
+
+@enduml
