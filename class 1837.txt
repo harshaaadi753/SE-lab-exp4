@@ -1,0 +1,48 @@
+@startuml
+class Customer {
+    + customerId: String
+    + name: String
+    + email: String
+    + initiateTransaction(): void
+}
+
+class BankSystem {
+    + processTransaction(transaction: Transaction): String
+    + validateAccount(account: Account): Boolean
+    + notifyCustomer(notification: Notification): void
+}
+
+class Account {
+    + accountId: String
+    + balance: double
+    + validate(): Boolean
+    + updateBalance(amount: double): void
+}
+
+class Transaction {
+    + transactionId: String
+    + amount: double
+    + type: String
+    + status: String
+    + process(): String
+}
+
+class PaymentGateway {
+    + processPayment(transaction: Transaction): Boolean
+}
+
+class Notification {
+    + notificationId: String
+    + message: String
+    + send(): void
+}
+
+Customer --> Transaction : initiates
+Transaction --> BankSystem : processes
+BankSystem --> Account : validates
+BankSystem --> PaymentGateway : interacts with
+BankSystem --> Notification : sends
+Account --> BankSystem : provides validation status
+PaymentGateway --> BankSystem : provides payment status
+Notification --> Customer : notifies
+@enduml
