@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+// Transaction class
+class Transaction {
+    private int transactionId;
+    private Date date;
+    private double amount;
+    private String type;
+
+    public Transaction(int transactionId, Date date, double amount, String type) {
+        this.transactionId = transactionId;
+        this.date = date;
+        this.amount = amount;
+        this.type = type;
+    }
+
+    public boolean execute() {
+        // Implement transaction execution logic here
+        return true; // Dummy return for example
+    }
+
+    // Getters
+    public int getTransactionId() { return transactionId; }
+    public Date getDate() { return date; }
+    public double getAmount() { return amount; }
+    public String getType() { return type; }
+}
+
+// Account class
+class Account {
+    private int accountId;
+    private String accountType;
+    private double balance;
+    private List<Transaction> transactions;
+
+    public Account(int accountId, String accountType) {
+        this.accountId = accountId;
+        this.accountType = accountType;
+        this.balance = 0.0;
+        this.transactions = new ArrayList<>();
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            transactions.add(new Transaction(transactions.size() + 1, new Date(), amount, "Deposit"));
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            transactions.add(new Transaction(transactions.size() + 1, new Date(), amount, "Withdrawal"));
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    // Getters
+    public int getAccountId() { return accountId; }
+    public String getAccountType() { return accountType; }
+}
+
+// Customer class
+class Customer {
+    private String customerId;
+    private String name;
+    private List<Account> accounts;
+
+    public Customer(String customerId, String name) {
+        this.customerId = customerId;
+        this.name = name;
+        this.accounts = new ArrayList<>();
+    }
+
+    public void openAccount(String accountType) {
+        Account account = new Account(accounts.size() + 1, accountType);
+        accounts.add(account);
+    }
+
+    public void closeAccount(int accountId) {
+        accounts.removeIf(account -> account.getAccountId() == accountId);
+    }
+
+    // Getters
+    public String getCustomerId() { return customerId; }
+    public String getName() { return name; }
+}
+
+// Bank class
+class Bank {
+    private String bankId;
+    private String name;
+    private List<Account> accounts;
+
+    public Bank(String bankId, String name) {
+        this.bankId = bankId;
+        this.name = name;
+        this.accounts = new ArrayList<>();
+    }
+
+    public void createAccount(String accountType) {
+        Account account = new Account(accounts.size() + 1, accountType);
+        accounts.add(account);
+    }
+
+    public void processTransaction(Transaction transaction) {
+        // Implement transaction processing logic here
+        transaction.execute();
+    }
+
+    // Getters
+    public String getBankId() { return bankId; }
+    public String getName() { return name; }
+}
